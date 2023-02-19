@@ -1,11 +1,4 @@
-ASM = $(wildcard lib/*.s)
-OBJ = $(patsubst %.s, %.o, $(ASM))
+ARCH := $(shell uname -m)
 
-%.o: %.s
-	as $< -o $@
-
-all: $(OBJ)
-
-clean:
-	rm -f *.o
-	rm -f $(PRG)
+all:
+	make -C src-$(ARCH)
