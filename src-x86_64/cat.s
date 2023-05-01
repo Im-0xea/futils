@@ -44,17 +44,17 @@ _start:
 		cmp $buf_s, %rdx # if read is under size stop
 		jge .read_loop
 	.read_end:
-		mov %r9, %rdi
+		mov %r9, %rdi    # get fd
 		mov $3, %rax
 		syscall          # call close syscall
 		jmp .file_loop
 	.file_end:
 	
-	xor %rdi, %rdi
+	xor %rdi, %rdi       # code 0
 	mov $60, %rax
 	syscall              # call exit syscall
 	
 	.fail:
-	mov $1, %rdi
+	mov $1, %rdi         # code 1
 	mov $60, %rax
 	syscall              # call exit syscall
