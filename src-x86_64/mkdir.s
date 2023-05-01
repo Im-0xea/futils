@@ -12,10 +12,17 @@ _start:
 		dec %rdx        # decrement argc
 		pop %rdi        # get argument pointer
 		mov $0777, %rsi # set new directory mode to 0777
-		mov $83, %rax   # call mkdir syscall
-		syscall
+		mov $83, %rax
+		syscall         # call mkdir syscall
+		test %rax, %rax
+		js .fail
 		jmp .file_loop
 	.file_end:
 	xor %rdi, %rdi
-	mov $60, %rax       # call exit syscall
-	syscall
+	mov $60, %rax
+	syscall             # call exit syscall
+	
+	.fail:
+	mov $1, %rdi
+	mov $60, %rax
+	syscall             # call exit syscall

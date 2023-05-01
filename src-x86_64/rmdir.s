@@ -13,8 +13,15 @@ _start:
 		pop %rdi       # get argument pointer
 		mov $84, %rax  # call rmdir syscall
 		syscall
+		test %rax, %rax
+		js .fail
 		jmp .file_loop
 	.file_end:
 	xor %rdi, %rdi
-	mov $60, %rax      # call exit syscall
-	syscall
+	mov $60, %rax
+	syscall            # call exit syscall
+	
+	.fail:
+	mov $1, %rdi
+	mov $60, %rax
+	syscall            # call exit syscall
