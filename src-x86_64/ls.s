@@ -24,7 +24,7 @@ _start:
 		js .fail            # fail check
 		
 		mov %rax, %rdi      # store fd for folder
-		mov %rax, %r8      # store fd for folder
+		mov %rax, %r8       # store fd for folder
 	.getdirents:
 		lea buf, %rsi       # load buffer address
 		mov $buf_s, %rdx    # load buffer size to count
@@ -47,8 +47,8 @@ _start:
 		mov $1, %rdx        # init strlen
 		jmp .count_loop
 		.inc_loop:
-		inc %rax        # increment string pointer
-		inc %rdx        # increment strlen
+		inc %rax            # increment string pointer
+		inc %rdx            # increment strlen
 		.count_loop:
 		movb (%rax), %bl    # move current char to bl
 		test %bl, %bl       # check if bl is NULL
