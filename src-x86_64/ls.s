@@ -4,6 +4,10 @@
 buf:
 	.space buf_s
 
+.section .data
+local:
+	.string "."
+
 .section .text
 
 .globl _start
@@ -12,12 +16,16 @@ _start:
 	mov (%rsp), %r13        # get argc
 	add $16, %rsp           # offset argv pointer
 	
+	cmp $1, %r13             # check if there is any arguments
+	jne .file_loop
+	lea local, %rdi         # if not load '.' into path
+	jmp .open
 	.file_loop:
 		cmp $1, %r13        # check if argc is under 2
 		je .file_end        # end program
 		pop %rdi            # pop argument pointer
+	.open:
 		mov $0x10000, %rsi  # set open mode for directory
-		
 		mov $2, %rax
 		syscall             # call open
 		test %rax, %rax

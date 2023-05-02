@@ -15,7 +15,7 @@ _start:
 	
 	cmp $1, %r8          # check if there is any arguments
 	jne .file_loop
-	mov $0, %r9          # load stdin as fd
+	xor %r9, %r9          # load stdin as fd
 	lea buf, %rsi        # load buffer address to rsi
 	jmp .read_loop       # skip to read
 	.file_loop:
