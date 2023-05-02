@@ -6,8 +6,8 @@ LDFLAGS := -static
 
 .SUFFIXES: .s .o
 
-OBJS = cat.o rm.o rmdir.o mkdir.o
-PRGS = cat rm rmdir mkdir
+OBJS = cat.o rm.o rmdir.o mkdir.o ls.o
+PRGS = cat rm rmdir mkdir ls
 
 .s.o:
 	$(AS) $(ASFLAGS) -o $@ $<
