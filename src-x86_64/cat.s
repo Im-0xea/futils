@@ -14,14 +14,14 @@ _start:
 	add $16, %rsp        # offset argv pointer
 	
 	cmp $1, %r8          # check if there is any arguments
-	jne .file_loop
+	jne .open
 	xor %r9, %r9          # load stdin as fd
 	lea buf, %rsi        # load buffer address to rsi
 	jmp .read_loop       # skip to read
 	.file_loop:
 		cmp $1, %r8      # check if argc is under 2
 		je .file_end     # end program
-		
+	.open:
 		dec %r8          # decrement argc
 		
 		pop %rdi         # load current path into rdi

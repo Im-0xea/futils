@@ -6,8 +6,8 @@ LDFLAGS := -static
 
 .SUFFIXES: .s .o
 
-OBJS = cat.o
-PRGS = cat
+OBJS = cat.o ls.o
+PRGS = cat ls
 
 .s.o:
 	$(AS) $(ASFLAGS) -o $@ $<
