@@ -24,6 +24,7 @@ _start:
 		cmp $1, %r13        # check if argc is under 2
 		je .file_end        # end program
 		pop %rdi            # pop argument pointer
+		dec %r13
 	.open:
 		mov $0x10000, %rsi  # set open mode for directory
 		mov $2, %rax
@@ -45,8 +46,8 @@ _start:
 	.dirent_loop:
 		#mov (%r12), %r8    # get d_ino
 		movzx 16(%r12), %r9 # get d_reclen
-		lea 18(%r12), %r10  # get d_name
-		inc %r10            # correct d_name by one
+		lea 19(%r12), %r10  # get d_name
+		//inc %r10            # correct d_name by one
 		test %r9, %r9
 		jz .dirent_end      # if d_reclen is 0 end loop
 		add %r9, %r12       # add d_reclen to pointer
