@@ -1,14 +1,14 @@
 .equ buf_s, 4096
 
-.section .bss
+.bss
 buf:
 	.space buf_s
 
-.section .data
+.data
 local:
 	.string "."
 
-.section .text
+.text
 
 .globl _start
 
