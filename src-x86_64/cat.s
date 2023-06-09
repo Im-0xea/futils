@@ -13,9 +13,9 @@ _start:
 	mov (%rsp), %r8      # get argc
 	add $16, %rsp        # offset argv pointer
 	
-	cmp $1, %r8          # check if there is any arguments
+	cmp $1, %r8          # check if there is any args
 	jne .open
-	xor %r9, %r9          # load stdin as fd
+	xor %r9, %r9         # load stdin as fd
 	lea buf, %rsi        # load buffer address to rsi
 	jmp .read_loop       # skip to read
 	.file_loop:
