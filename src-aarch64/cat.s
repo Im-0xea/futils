@@ -13,16 +13,15 @@ _start:
 	ldr w30, [sp]         // get argc
 	mov x25, 16           // set arg offset to argv[1]
 	
-	cmp w30, 1            // check if no arguments where supplied
-	bne .file_loop        
+	cmp w30, 1            // check if there is any args
+	bne .open        
 	eor x27, x27, x27     // set fd to stdin
 	b .read_loop
 	.file_loop:
 		cmp w30, 1        // check if there are args left
 		beq .file_end
-		
 		sub w30,w30, 1    // decrement argc
-		
+	.open:
 		ldr x1, [sp, x25] // get current argument
 		add x25, x25, 8   // increment arg pointer
 		
@@ -33,7 +32,7 @@ _start:
 		cmp x0, 0
 		blt .fail         // fail check
 		
-		mov x27, x0       // save fd, needed for repeated reads
+		mov x27, x0       // save fd
 	.read_loop:
 		adr x1, buf      // load buffer address to dest
 		mov x0, x27       // get saved fd
@@ -57,7 +56,6 @@ _start:
 		b .file_loop
 	.file_end:
 	
-	.file_end:
 	mov w0, 0             // code 0
 	mov x8, 93
 	svc 0                 // call exit syscall

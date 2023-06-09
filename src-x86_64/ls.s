@@ -47,22 +47,14 @@ _start:
 		#mov (%r12), %r8    # get d_ino
 		movzx 16(%r12), %r9 # get d_reclen
 		lea 19(%r12), %r10  # get d_name
-		//inc %r10            # correct d_name by one
 		test %r9, %r9
 		jz .dirent_end      # if d_reclen is 0 end loop
 		add %r9, %r12       # add d_reclen to pointer
-	.strlen:
-		mov %r10, %rax      # use rax as string pointer
-		mov $1, %rdx        # init strlen
-		jmp .count_loop
-		.inc_loop:
-		inc %rax            # increment string pointer
-		inc %rdx            # increment strlen
-		.count_loop:
-		movb (%rax), %bl    # move current char to bl
-		test %bl, %bl       # check if bl is NULL
-		jnz .inc_loop
-		movb $'\n', (%rax)  # add line break
+		mov %r9, %r13
+		sub $22, %r13
+		movb $'\n', (%r13,%r10)  # add line break
+		inc %r13
+		movb $'\0', (%r13,%r10)  # add line break
 	.print:
 		mov $1, %rdi        # to STDOUT
 		mov %r10, %rsi      # get d_name pointer
